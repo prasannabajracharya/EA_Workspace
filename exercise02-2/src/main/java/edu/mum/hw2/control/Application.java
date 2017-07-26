@@ -48,16 +48,21 @@ public class Application {
 		try {
 			tx.begin();
 			//code for report creation
-			Product product = em.find(Product.class,1);
+			Order order = em.find(Order.class,1);
 			
-			System.out.println("-------product Report--------");
-			System.out.println("product Name: " + product.getName());
-			System.out.println("product Description: " + product.getDescription());
-
+			System.out.println("------- Report --------");
+			System.out.println("Order Id: " + order.getOrderId());
+			System.out.println("Order Date: " + order.getDate());
+			
+			for(OrderLine orderline : order.getOrderLine()){
+				System.out.println("OrderLine Description: " + orderline.getQuantity());
+				System.out.println("Product : " + orderline.getProduct().getName());
+				System.out.println("Product : " + orderline.getProduct().getDescription());
+			}
 			tx.commit();
 		} catch (Throwable e) {
 			if ((tx != null) && (tx.isActive())) tx.rollback();
-			System.out.println("hello");
+			System.out.println("ERROR!! printProductReport()");
 		} finally {
 			if ((em != null) && (em.isOpen())) em.close();
 		}	
@@ -81,23 +86,21 @@ public class Application {
 			orderline1.setProduct(product);
 			orderline1.setQuantity(10);
 			
-			OrderLine orderline2 = new OrderLine();
-			orderline2.setProduct(product);
-			orderline2.setQuantity(20);
+//			OrderLine orderline2 = new OrderLine();
+//			orderline2.setProduct(product);
+//			orderline2.setQuantity(20);
 			
 			List<OrderLine> orderLine = new ArrayList<>();
 			orderLine.add(orderline1);
-			orderLine.add(orderline2);
+			//orderLine.add(orderline2);
 			
 			Order order = new Order();
-			order.setOrderId(1);
+			//order.setOrderId(1);
 			order.setDate(Date.valueOf("2017-01-10"));
 			order.setOrderLine(orderLine);			
 			
-
-			em.persist(product);
+			em.persist(order);
 			
-
 			tx.commit();
 		} catch (Throwable e) {
 			if ((tx != null) && (tx.isActive())) tx.rollback();

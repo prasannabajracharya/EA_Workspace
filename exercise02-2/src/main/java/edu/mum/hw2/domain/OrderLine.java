@@ -10,7 +10,7 @@ public class OrderLine {
 	@Embedded
 	private Product product;
 	
-	public OrderLine(){}
+	//public OrderLine(){}
 
 	public int getQuantity() {
 		return quantity;

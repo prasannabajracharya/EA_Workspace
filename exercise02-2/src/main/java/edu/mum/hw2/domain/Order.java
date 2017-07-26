@@ -19,7 +19,7 @@ public class Order {
 	@ElementCollection
 	private List<OrderLine> orderLine = new ArrayList<>();
 	
-	public Order(){}
+	//public Order(){}
 
 	public int getOrderId() {
 		return orderId;

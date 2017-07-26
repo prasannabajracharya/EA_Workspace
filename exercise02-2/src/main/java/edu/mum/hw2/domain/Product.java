@@ -7,7 +7,7 @@ public class Product {
 	private String name;
 	private String description;
 	
-	public Product(){}
+	//public Product(){}
 
 	public String getName() {
 		return name;
