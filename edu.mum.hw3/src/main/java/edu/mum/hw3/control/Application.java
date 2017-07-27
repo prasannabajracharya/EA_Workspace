@@ -8,10 +8,12 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
-import edu.mum.hw3.domain.Book;
 import edu.mum.hw3.domain.Department;
 import edu.mum.hw3.domain.Employee;
-import edu.mum.hw3.domain.Publisher;
+import edu.mum.hw3.domain.b.Book;
+import edu.mum.hw3.domain.b.Publisher;
+import edu.mum.hw3.domain.c.Course;
+import edu.mum.hw3.domain.c.Student;
 
 
 public class Application {
@@ -44,13 +46,15 @@ public class Application {
 			tx.begin();
 			//code for report creation
 			Department department = em.find(Department.class,1);
-			Employee employee = em.find(Employee.class, 2);
+			Employee emp1 = em.find(Employee.class, 2);
+			Employee emp2 = em.find(Employee.class, 3);
 			
 			System.out.println("------- Dempartment Employee Report--------");
 			System.out.println("Department Name: " + department.getName());
-			System.out.println("Employee Name: " + employee.getName());
+			System.out.println("Employee Name: " + emp1.getName());
+			System.out.println("Employee Name: " + emp2.getName());
 			
-			Book book = em.find(Book.class, 3);
+			Book book = em.find(Book.class, 4);
 			
 			System.out.println("------- Book Publisher Report--------");
 			System.out.println("Book iSBN : " + book.getISBN());
@@ -86,14 +90,16 @@ public class Application {
 			emp1.setName("John");
 			Employee emp2 = new Employee();
 			emp2.setName("Adam");
-			
+			emp1.setDepartment(department);
+			emp2.setDepartment(department);
 			employees.add(emp1);
 			employees.add(emp2);
 			
 			department.setEmployee(employees);
 						
 			em.persist(department);
-	//		em.persist(employees);
+			//em.persist(emp1); //no need as cascaded in department entity
+			//em.persist(emp2);
 			
 			//Optional Unidirectional ManyToOne 
 			Book book = new Book();
@@ -107,6 +113,42 @@ public class Application {
 			
 			em.persist(book);
 			em.persist(publisher);
+			
+			//ManyToMany Bidirectional
+			
+			Student stud1 = new Student();
+			stud1.setFirstName("Prasanna");
+			stud1.setLastName("Bajracharya");
+			
+			Student stud2 = new Student();
+			stud2.setFirstName("Shyam");
+			stud2.setLastName("Karki");
+			
+			Course course1 = new Course();
+			course1.setCourseName("MyEA");
+			course1.setCourseNumber("CS544");
+			
+			Course course2 = new Course();
+			course2.setCourseName("MyEA2");
+			course2.setCourseNumber("CS5442");
+			
+			List<Course> courseList = new ArrayList<Course>();
+			courseList.add(course1);
+			courseList.add(course2);
+			
+			List<Student> studentList = new ArrayList<Student>();
+			studentList.add(stud1);
+			studentList.add(stud2);
+			
+			//course1.setStudentList(studentList);
+			stud1.setCourseList(courseList);
+			stud2.setCourseList(courseList);
+			
+			em.persist(course1);
+			em.persist(stud1);
+			em.persist(course2);
+			em.persist(stud2);
+			
 			
 			tx.commit();
 		} catch (Throwable e) {

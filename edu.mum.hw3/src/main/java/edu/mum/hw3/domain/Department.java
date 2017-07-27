@@ -1,8 +1,10 @@
 package edu.mum.hw3.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,8 +21,8 @@ public class Department {
 	private int id;
 	private String name;
 	
-	@OneToMany(mappedBy="department")
-	private List<Employee> employee = new ArrayList<Employee>();
+	@OneToMany(mappedBy="department", cascade = CascadeType.PERSIST)
+	private List<Employee> employeeList = new ArrayList<Employee>();
 	
 	public String getName() {
 		return name;
@@ -30,10 +32,20 @@ public class Department {
 	}
 
 	public List<Employee> getEmployee() {
-		return employee;
+		return employeeList;
 	}
 	public void setEmployee(List<Employee> employee) {
-		this.employee = employee;
+		this.employeeList = employee;
 	}
+	
+//	public void addEmployee(Employee employee) {
+//		employee.setDepartment(this);
+//		employeeList.add(employee);
+//	}
+//
+//	public void removeEmployee(Employee emp) {
+//		emp.setDepartment(null);
+//		employeeList.remove(emp);
+//	}
 		
 }
