@@ -19,7 +19,7 @@ public class Employee {
 	private String name;
 	
 	@ManyToOne
-	@JoinColumn(name="departmentId")
+	//@JoinColumn(name="departmentId")
 	private Department department;
 	
 	public String getName() {

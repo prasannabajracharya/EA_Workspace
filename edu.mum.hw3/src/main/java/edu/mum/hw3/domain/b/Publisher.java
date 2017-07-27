@@ -1,4 +1,4 @@
-package edu.mum.hw3.domain;
+package edu.mum.hw3.domain.b;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
