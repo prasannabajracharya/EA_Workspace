@@ -1,6 +1,8 @@
 package edu.mum.hw3.control;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -14,6 +16,9 @@ import edu.mum.hw3.domain.b.Book;
 import edu.mum.hw3.domain.b.Publisher;
 import edu.mum.hw3.domain.c.Course;
 import edu.mum.hw3.domain.c.Student;
+import edu.mum.hw3.domain.d.Customer;
+import edu.mum.hw3.domain.d.Reservation;
+import edu.mum.hw3.domain.f.Office;
 
 
 public class Application {
@@ -92,9 +97,22 @@ public class Application {
 			emp2.setName("Adam");
 			emp1.setDepartment(department);
 			emp2.setDepartment(department);
+			
+			//Bidirectional ManyToOne Emp<=> Office
+			Office office = new Office();
+			office.setBuilding("Argiro");
+			office.setRoomNumber("R101");
+			
+			emp1.setOffice(office);
+			emp2.setOffice(office);
+			
 			employees.add(emp1);
 			employees.add(emp2);
 			
+			office.setEmpList(employees);
+			
+			em.persist(office);
+					
 			department.setEmployee(employees);
 						
 			em.persist(department);
@@ -149,6 +167,23 @@ public class Application {
 			em.persist(course2);
 			em.persist(stud2);
 			
+			// Unidirectional OneToMany
+			Customer customer = new Customer();
+			customer.setName("MyCustomer");
+			
+			Reservation reservation1 = new Reservation();
+			reservation1.setDate(Date.valueOf("2017-12-12"));
+			
+			Reservation reservation2 = new Reservation();
+			reservation2.setDate(Date.valueOf("2017-10-10"));
+			
+			customer.setReservationList(Arrays.asList(reservation1, reservation2));
+			
+			//Unidirectional ManyToOne Reservation To Book
+			reservation1.setBook(book);
+			reservation2.setBook(book);
+			
+			em.persist(customer);
 			
 			tx.commit();
 		} catch (Throwable e) {

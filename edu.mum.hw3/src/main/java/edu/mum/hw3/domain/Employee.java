@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import edu.mum.hw3.domain.f.Office;
+
 @Entity
 public class Employee {
 
@@ -19,8 +21,12 @@ public class Employee {
 	private String name;
 	
 	@ManyToOne
-	//@JoinColumn(name="departmentId")
+	@JoinColumn(name="departmentId")
 	private Department department;
+	
+	@ManyToOne
+	@JoinColumn(name="officeId")
+	private Office office;
 	
 	public String getName() {
 		return name;
@@ -34,6 +40,13 @@ public class Employee {
 	}
 	public void setDepartment(Department department) {
 		this.department = department;
+	}
+	
+	public Office getOffice() {
+		return office;
+	}
+	public void setOffice(Office office) {
+		this.office = office;
 	}
 	
 	
