@@ -7,6 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
 
@@ -43,17 +44,56 @@ public class App {
 			tx.begin();
 
 			logger.trace("List all the flights:");
-			List<Flight> flights = em.createQuery("from Flight").getResultList();
-			logger.trace(String.format("%-9s%-31s%-31s", "Flight:", "Departs:",
+			 Query query = em.createQuery("Select f FROM Flight f JOIN f.origin f1 JOIN f.airplane f2 where f1.country = :contry and f2.capacity > 500");
+			 query.setParameter("contry", "USA");
+			 List<Flight> flights = query.getResultList();
+			 logger.trace(String.format("%-9s%-31s%-31s", "Flight:", "Departs:",
 					"Arrives:"));
 			for (Flight flight : flights) {
 				logger.trace(String.format(
 						"%-7s  %-12s %7s %8s  %-12s %7s %8s",
+						flight.getId(),
 						flight.getFlightnr(), flight.getOrigin().getCity(),
 						flight.getDepartureDate(), flight.getDepartureTime(),
 						flight.getDestination().getCity(),
 						flight.getArrivalDate(), flight.getArrivalTime()));
 			}
+			
+
+			logger.trace("List all the airlines that use A380 (model) airplanes:");
+			List<Airline> airlines = em.createQuery("SELECT a from Airline a join a.flights b join b.airplane c where c.model = 'A380'").getResultList();
+			//logger.trace(String.format("%-9s%-31s", "AirlineID:", "AirlineName:"));
+			for (Airline airline : airlines) {
+				System.out.println(airline.getId() + " " + airline.getName());
+				
+			}
+			
+			logger.trace("All fights using 747 planes that don t belong to  Star Alliance :");
+			List<Flight> flights747 = em.createQuery("select a from Flight a join a.airplane b join a.airline c where b.model = '747' and c.name <> 'Star Alliance'").getResultList();
+
+			for (Flight flight : flights747) {
+				logger.trace(String.format(
+						"%-7s  %-12s %7s %8s  %-12s %7s %8s",
+						flight.getId(),
+						flight.getFlightnr(), flight.getOrigin().getCity(),
+						flight.getDepartureDate(), flight.getDepartureTime(),
+						flight.getDestination().getCity(),
+						flight.getArrivalDate(), flight.getArrivalTime()));
+			}
+			
+			logger.trace("All flights leaving before 12pm on 08/07/2009 :");
+			List<Flight> flightsLeaving = em.createQuery("select a from Flight a where a.departureDate = '2009-08-07' and a.departureTime < '24:00:00'").getResultList();
+
+			for (Flight flight : flightsLeaving) {
+				logger.trace(String.format(
+						"%-7s  %-12s %7s %8s  %-12s %7s %8s",
+						flight.getId(),
+						flight.getFlightnr(), flight.getOrigin().getCity(),
+						flight.getDepartureDate(), flight.getDepartureTime(),
+						flight.getDestination().getCity(),
+						flight.getArrivalDate(), flight.getArrivalTime()));
+			}
+			
 			tx.commit();
 		} catch (PersistenceException e) {
 			if (tx != null) {
