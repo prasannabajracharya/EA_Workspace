@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+	
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
+	<bean id="accountService" class="cs544.exercise7_1.bank.service.AccountService">
+		<constructor-arg index="0" ref="accountDAO" />
+		<constructor-arg index="1" ref="currencyConverter" />
+		<constructor-arg index="2" ref="jmsSender" />
+		<constructor-arg index="3" ref="logger" />
+	</bean>
+	
+<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+	<property name="dataSource" ref="dataSource" />
+	<property name="hibernateProperties" ref="hibernateProperties" />
+	<property name="annotatedClasses">
+		<list>
+			<value>cs544.exercise7_1.bank.domain.Account</value>
+        	<value>cs544.exercise7_1.bank.domain.AccountEntry</value>
+        	<value>cs544.exercise7_1.bank.domain.Customer</value>
+		</list>
+	</property>
+</bean>
+
+<bean id="hibernateProperties"
+	class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+	
+	<property name = "properties">
+		<props>
+			 <!-- MySQL DB running on localhost -->
+        <prop key="connection.url">jdbc:mysql://localhost/bank</prop>
+        <prop key="connection.driver_class">com.mysql.jdbc.Driver</prop>
+        <prop key="connection.username">root</prop>
+        <!--  <prop key="connection.password">root</prop> -->
+        <prop key="dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+
+		<!-- Use the Hibernate built-in pool for tests. -->
+		<prop key="connection.pool_size">1</prop>
+
+		<!-- Show all SQL DML executed by Hibernate -->
+		<prop key="show_sql">true</prop>
+		<prop key="use_sql_comments">true</prop>
+		<prop key="hibernate.format_sql">false</prop>
+		
+		<!-- Always drop and recreate the database schema on startup -->
+		<prop key="hbm2ddl.auto">create</prop>
+		
+		<!-- use thread local pattern -->
+		<prop key="current_session_context_class">thread</prop>
+		</props>
+	</property>
+	       
+	
+</bean> 
+</beans>
