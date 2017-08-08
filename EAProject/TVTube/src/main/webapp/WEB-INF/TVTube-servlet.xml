@@ -41,6 +41,8 @@
 			<list>
 				<value>edu.mum.tvtube.Domain.Cast</value>
 				<value>edu.mum.tvtube.Domain.Episode</value>
+				<value>edu.mum.tvtube.Domain.Season</value>
+				<value>edu.mum.tvtube.Domain.TVSeries</value>
 			</list>
 		</property>
 	</bean>
@@ -82,4 +84,5 @@
 <!-- 	<bean id="episodeController" class="edu.mum.tvtube.Controllers.EpisodeController" />
 	<bean id="episodeService" class="edu.mum.tvtube.Service.EpisodeService" />  -->
 
+	<bean id="seasonDAO" class="edu.mum.tvtube.DAO.SeasonDAO" />
 </beans>
