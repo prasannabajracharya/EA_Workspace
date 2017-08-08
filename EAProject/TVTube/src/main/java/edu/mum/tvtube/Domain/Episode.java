@@ -55,6 +55,7 @@ public class Episode {
 		this.episodeName = episodeName;
 	}
 
+
 	public String getGenre() {
 		return genre;
 	}

@@ -29,6 +29,12 @@ public class Cast {
 		this.biography = biography;
 	}
 	
+	public int getCastId() {
+		return castId;
+	}
+	public void setCastId(int castId) {
+		this.castId = castId;
+	}
 	public String getName() {
 		return name;
 	}

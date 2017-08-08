@@ -9,7 +9,7 @@
 <title>Cast List</title>
 </head>
 <body>
-	<h1>Casts </h1>
+	<h1>Casts</h1>
 	<table>
 	<c:forEach var="cast" items="${castList}">
 	<tr>
@@ -17,11 +17,12 @@
 		<td>${cast.characterName}</td>
 		<td>${cast.placeOfBirth}</td>
 		<td>${cast.biography}</td>
+		<td><a href="detail/${cast.castId}">edit</a></td>
 	</tr>
 	</c:forEach>
 	</table>
 	
-	<a href="create"> Add a Cast</a>
+	<a href="create">Add a Cast</a>
 
 </body>
 </html>

@@ -43,14 +43,35 @@ public class CastDAO implements ICastDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	@Transactional
+	public void update(Cast cast) {
+			Session session = sessionFactory.getCurrentSession();
+			session.update(cast);
+	}
 
-
+	@Override
+	@Transactional
+	public Cast findCast(int id) {
+		Session session = sessionFactory.getCurrentSession();		
+		Cast cast = (Cast) session.get(Cast.class,id);
+		return cast;
+	}
+	
 	@Override
 	@Transactional
 	public List<Cast> findAll() {
 		session = sessionFactory.getCurrentSession();
 		Query query = (Query) session.createQuery("select a from Cast a");
 		return query.list();
+	}
+
+	@Override
+	@Transactional
+	public void delete(Cast cast) {
+		session = sessionFactory.getCurrentSession();
+		session.delete(cast);		
 	}
 
 }

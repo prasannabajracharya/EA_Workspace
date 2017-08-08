@@ -29,4 +29,16 @@ public class CastService {
 		return castDAO.findAll();
 	}
 	
+	public void update(Cast cast){
+		castDAO.update(cast);
+	}
+	
+	public Cast findCast(int id){
+		return castDAO.findCast(id);
+	}
+	
+	public void delete(Cast cast){
+		castDAO.delete(cast);
+	}
+	
 }
