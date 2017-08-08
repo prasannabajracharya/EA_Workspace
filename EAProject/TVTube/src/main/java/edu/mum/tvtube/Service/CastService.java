@@ -4,10 +4,12 @@ package edu.mum.tvtube.Service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import edu.mum.tvtube.DAO.ICastDAO;
 import edu.mum.tvtube.Domain.Cast;
 
+@Service
 public class CastService {
 	
 	private ICastDAO castDAO;

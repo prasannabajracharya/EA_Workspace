@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import edu.mum.tvtube.Domain.Episode;
 
 @Repository
-public class EpisodeDAO{
+public class EpisodeDAO implements IEpisodeDAO{
 	
 	private Session session;
 	private static SessionFactory sessionFactory;
@@ -26,36 +26,47 @@ public class EpisodeDAO{
 		this.sessionFactory = sf;
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.mum.tvtube.DAO.IEpisodeDAO#create(edu.mum.tvtube.Domain.Episode)
+	 */
+	@Override
 	@Transactional
 	public void create(Episode episode) {
 		try {
 			session = sessionFactory.getCurrentSession();
-			//Transaction tx = session.beginTransaction();
 			session.persist(episode);
-			//tx.commit();
 		} catch (HibernateException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Exception in Episode DAO create.");
 			e.printStackTrace();
 		}
-	}
-	
+	}	
 
+	/* (non-Javadoc)
+	 * @see edu.mum.tvtube.DAO.IEpisodeDAO#update(edu.mum.tvtube.Domain.Episode)
+	 */
+	@Override
 	@Transactional
 	public void update(Episode episode) {
 			Session session = sessionFactory.getCurrentSession();
 			session.update(episode);
 	}
 
-
+	/* (non-Javadoc)
+	 * @see edu.mum.tvtube.DAO.IEpisodeDAO#findEpisode(int)
+	 */
+	@Override
 	@Transactional
 	public Episode findEpisode(int id) {
 		Session session = sessionFactory.getCurrentSession();		
 		Episode episode = (Episode) session.get(Episode.class,id);
 		return episode;
-	}
-	
+	}	
 
+	/* (non-Javadoc)
+	 * @see edu.mum.tvtube.DAO.IEpisodeDAO#findAll()
+	 */
+	@Override
 	@Transactional
 	public List<Episode> findAll() {
 		session = sessionFactory.getCurrentSession();
@@ -63,7 +74,10 @@ public class EpisodeDAO{
 		return query.list();
 	}
 
-
+	/* (non-Javadoc)
+	 * @see edu.mum.tvtube.DAO.IEpisodeDAO#delete(edu.mum.tvtube.Domain.Episode)
+	 */
+	@Override
 	@Transactional
 	public void delete(Episode episode) {
 		session = sessionFactory.getCurrentSession();

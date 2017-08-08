@@ -21,11 +21,11 @@ public class CastController {
 		
 	@RequestMapping()
 	public String goHome(){
-		return "castList";
+		return "cast/castList";
 	}
 	@RequestMapping(value="/create", method=RequestMethod.GET)
 	public String addCast(){
-		return "addCast";
+		return "cast/addCast";
 	}
 	
 	@RequestMapping(value="/create", method=RequestMethod.POST)
@@ -38,13 +38,13 @@ public class CastController {
 	public String getAllCasts(Model model){
 		List<Cast> castList = castService.getAllCasts();
 		 model.addAttribute("castList", castService.getAllCasts());
-		 return "castList";
+		 return "cast/castList";
 	}
 
 	@RequestMapping(value="/detail/{id}", method=RequestMethod.GET)
 	public String showDetail(@PathVariable int id, Model model){	
 		model.addAttribute("cast", castService.findCast(id));
-		return "castDetail";
+		return "cast/castDetail";
 	}
 	
 	@RequestMapping(value="/detail/{id}", method=RequestMethod.POST)
