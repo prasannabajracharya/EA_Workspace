@@ -10,16 +10,27 @@
 </head>
 <body>
 	<h1>Tvseries</h1>
-	<table>
+	<table border="1">
+	<tr>
+        <th>Name</th>
+        <th>Genre</th>
+        <th>Director</th>
+        <th>Description</th>
+        <th>Studio</th>
+        <th>Action</th>
+    </tr>
+    
 	<c:forEach var="tvseries" items="${tvseriesList}">
 	<tr>
+		
 		<td>${tvseries.name}</td>
 		<td>${tvseries.genre}</td>
 		<td>${tvseries.director}</td>
 		<td>${tvseries.description}</td>
 		<td>${tvseries.studio}</td>
-		<td>${tvseries.director}</td>
-		<td><a href="detail/${tvseries.id}">edit</a></td>
+		<td><a href="detail/${tvseries.id}">edit</a>
+			<a href="list/${tvseries.id}">Seasons</a>
+		</td>
 	</tr>
 	</c:forEach>
 	</table>

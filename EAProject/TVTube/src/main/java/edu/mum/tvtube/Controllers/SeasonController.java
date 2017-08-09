@@ -61,4 +61,11 @@ public class SeasonController {
 		seasonService.delete(season); 
 		return "redirect:/season/list";
 	}
+
+//	@RequestMapping(value="/list/{id}", method=RequestMethod.GET)
+//	public String getAllSeasonsForTvseries(Model model, @PathVariable int id){
+//		List<Season> seasonListForTvseries = seasonService.getAllSeasonsForTvseries(id);
+//		 model.addAttribute("seasonListForTvseries", seasonListForTvseries);
+//		 return "season/seasonList";
+//	}
 }

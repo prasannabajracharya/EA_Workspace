@@ -17,7 +17,6 @@ import edu.mum.tvtube.Service.TvseriesService;
 public class TvseriesController {
 	@Autowired
 	TvseriesService tvseriesService;
-		
 
 	@RequestMapping(value="/create", method=RequestMethod.GET)
 	public String addTvseries(){
@@ -31,11 +30,18 @@ public class TvseriesController {
 	}
 	
 	@RequestMapping(value="/list", method=RequestMethod.GET)
-	public String getAllTvseriess(Model model){
-		List<Tvseries> tvseriesList = tvseriesService.getAllTvseriess();
-		 model.addAttribute("tvseriesList", tvseriesService.getAllTvseriess());
+	public String getAllTvseries(Model model){
+		List<Tvseries> tvseriesList = tvseriesService.getAllTvseries();
+		 model.addAttribute("tvseriesList", tvseriesService.getAllTvseries());
 		 return "tvseries/tvseriesList";
 	}
+	
+//	@RequestMapping(value="/list/{id}", method=RequestMethod.GET)
+//	public String getAllSeasonsForTvseries(Model model, @PathVariable("id") int id){
+//		List<Tvseries> tvseriesList = tvseriesService.getAllSeasonsForTvseries();
+//		 model.addAttribute("tvseriesList", seasonsForTvseriesList);
+//		 return "tvseries/tvseriesList";
+//	}
 
 	@RequestMapping(value="/detail/{id}", method=RequestMethod.GET)
 	public String showDetail(@PathVariable int id, Model model){	

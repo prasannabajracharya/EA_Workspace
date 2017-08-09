@@ -30,9 +30,13 @@ public class TvseriesService {
 		tvseriesDAO.create(tvseries);
 	}
 	
-	public List<Tvseries> getAllTvseriess(){
+	public List<Tvseries> getAllTvseries(){
 		return tvseriesDAO.findAll();
 	}
+	
+//	public List<Tvseries> getAllSeasonsForTvseries(){
+//		return tvseriesDAO.getAllSeasonsForTvseries();
+//	}
 	
 	public void update(Tvseries tvseries){
 		tvseriesDAO.update(tvseries);
