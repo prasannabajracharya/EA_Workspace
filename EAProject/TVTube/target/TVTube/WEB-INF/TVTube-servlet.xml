@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:ctx="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/util 
+       http://www.springframework.org/schema/util/spring-util-3.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd"
+       >
+	
+	
+	<ctx:annotation-config></ctx:annotation-config>
+	<ctx:component-scan base-package="edu.mum"></ctx:component-scan>
+	<mvc:annotation-driven/>
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/WEB-INF/views/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	
+<!-- Hibernate SessionFactory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties" ref="hibernateProperties" />
+		<!-- OR mapping files. -->
+		<property name="annotatedClasses">
+			<list>
+				<value>edu.mum.tvtube.Domain.Cast</value>
+				<value>edu.mum.tvtube.Domain.Episode</value>
+				<value>edu.mum.tvtube.Domain.Season</value>
+				<value>edu.mum.tvtube.Domain.Tvseries</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- the datasource -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost/TVTube" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
+	</bean>
+
+	<!-- hibernate Properties -->
+	<bean id="hibernateProperties"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="properties">
+			<props>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect
+				</prop>
+				<prop key="connection.pool_size">1</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<tx:annotation-driven transaction-manager="txManager" />
+	<bean id="txManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>	
+	
+	<bean id="castDAO" class="edu.mum.tvtube.DAO.CastDAO" />
+<!-- 	<bean id="castController" class="edu.mum.tvtube.Controllers.CastController" /> -->
+<!--  	<bean id="castService" class="edu.mum.tvtube.Service.CastService" />  -->
+	
+	<bean id="episodeDAO" class="edu.mum.tvtube.DAO.EpisodeDAO" />
+<!-- 	<bean id="episodeController" class="edu.mum.tvtube.Controllers.EpisodeController" />
+	<bean id="episodeService" class="edu.mum.tvtube.Service.EpisodeService" />  -->
+
+	<bean id="seasonDAO" class="edu.mum.tvtube.DAO.SeasonDAO" />
+	
+	<bean id="tvseriesDAO" class="edu.mum.tvtube.DAO.TvseriesDAO" />
+</beans>
